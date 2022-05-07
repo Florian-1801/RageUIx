@@ -75,6 +75,12 @@ function RageUI.PoolMenus:Example()
 
         Items:AddButton("Close Menu", "To close the current menu", { IsDisabled = false }, function(onSelected)
             if onSelected then
+                Items:CloseCurrentMenu()
+            end
+        end)
+
+        Items:AddButton("Close All Opened Menu", "To close all of opened menu", { IsDisabled = false }, function(onSelected)
+            if onSelected then
                 Items:CloseAllMenu()
             end
         end)
