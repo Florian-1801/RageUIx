@@ -530,3 +530,23 @@ function Items:CloseAllMenu()
     end)
 end
 
+---Percentible
+---@param time number
+--local Percentible = {
+--    i = 0,
+--    j = 0,
+--    towait = nil
+--}
+--function Items:Percentible(time)
+--    Percentible.towait = math.round(time / 100)
+--    print("i = "..Percentible.i.." j = "..Percentible.j..' towait = '..Percentible.towait)
+--    Items:AddSeparator(tostring(Percentible.i)..'%')
+--    Percentible.j = Percentible.j + 1
+--    if Percentible.j == Percentible.towait then
+--        print("gg")
+--        Percentible.j = 0
+--        Percentible.i = Percentible.i + 1
+--        print('yoyo')
+--    end
+--end
+
