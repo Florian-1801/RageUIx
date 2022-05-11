@@ -13,7 +13,6 @@ Keys = {};
 ---@param Action function
 ---@return Keys
 ---@public
-
 function Keys.Register(Controls, ControlName, Description, Action)
     RegisterKeyMapping(string.format('keys-%s', ControlName), Description, "keyboard", Controls)
     RegisterCommand(string.format('keys-%s', ControlName), function()

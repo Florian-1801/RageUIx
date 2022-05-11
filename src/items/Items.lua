@@ -516,14 +516,17 @@ function Items:CharPopup(array)
     DrawNotification(false, true)
 end
 
+---CloseCurrentMenu
 function Items:CloseCurrentMenu()
     Citizen.CreateThread(function()
         RageUI.Visible(RageUI.CurrentMenu, false)
     end)
 end
 
+---CloseAllMenu
 function Items:CloseAllMenu()
     Citizen.CreateThread(function()
         RageUI.CloseAll()
     end)
 end
+
