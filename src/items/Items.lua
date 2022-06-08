@@ -530,23 +530,26 @@ function Items:CloseAllMenu()
     end)
 end
 
----Percentible
----@param time number
---local Percentible = {
---    i = 0,
---    j = 0,
---    towait = nil
---}
---function Items:Percentible(time)
---    Percentible.towait = math.round(time / 100)
---    print("i = "..Percentible.i.." j = "..Percentible.j..' towait = '..Percentible.towait)
---    Items:AddSeparator(tostring(Percentible.i)..'%')
---    Percentible.j = Percentible.j + 1
---    if Percentible.j == Percentible.towait then
---        print("gg")
---        Percentible.j = 0
---        Percentible.i = Percentible.i + 1
---        print('yoyo')
---    end
---end
+---SetClosable
+---@param state boolean
+function Items:SetClosable(state)
+
+end
+
+---@type table
+local SettingsButton = {
+    Rectangle = { Y = 0, Width = 431, Height = 38 },
+    Text = { X = 8, Y = 3, Scale = 0.33 },
+    LeftBadge = { Y = -2, Width = 40, Height = 40 },
+    RightBadge = { X = 385, Y = -2, Width = 40, Height = 40 },
+    RightText = { X = 420, Y = 4, Scale = 0.35 },
+    SelectedSprite = { Dictionary = "commonmenu", Texture = "gradient_nav", Y = 0, Width = 431, Height = 38 },
+}
+
+local SettingsProgress = {
+    Background = { X = 8, Y = 33, Width = 415, Height = 20 },
+    Bar = { X = 11.75, Y = 36.75, Width = 407.5, Height = 12.5 },
+    Height = 60
+}
+
 

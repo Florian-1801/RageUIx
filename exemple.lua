@@ -23,7 +23,7 @@ function RageUI.PoolMenus:Example()
 
             Items:RenderSprite("RageUI", "demo_rendersprite",435, 145, 430, 200, 100)
 
-        end, SubMenu)
+        end)
 
         Items:AddSeparator("↓ This is the default Line ↓")
 
@@ -85,6 +85,9 @@ function RageUI.PoolMenus:Example()
             end
         end)
 
+        Items:AddButton("Submenu", nil, { IsDisabled = false }, function(onSelected)
+
+        end, submenu)
 
 
     end, function(Panels)
