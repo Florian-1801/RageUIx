@@ -4,7 +4,7 @@
 --- DateTime: 22/04/2022 14:58
 ---
 
-local MainMenu = RageUI.CreateMenu("Title", "SUBTITLE", nil, nil, "RageUI", "demo_banner" );
+local MainMenu = RageUI.CreateMenu("Title", "SUBTITLE", nil, nil, "rageui", "demo_banner" );
 MainMenu.EnableMouse = true;
 
 local SubMenu = RageUI.CreateSubMenu(MainMenu, "Title", "SubTitle")
@@ -21,7 +21,7 @@ function RageUI.PoolMenus:Example()
 
         Items:AddButton("Render Sprite", "This is a render sprite", { IsDisabled = false }, function(onSelected)
 
-            Items:RenderSprite("RageUI", "demo_rendersprite",435, 145, 430, 200, 100)
+            Items:RenderSprite("rageui", "demo_rendersprite",435, 145, 430, 200, 100)
 
         end)
 
