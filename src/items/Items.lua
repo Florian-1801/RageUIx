@@ -280,11 +280,12 @@ end
 ---@param Label string
 ---@param Items table<any, any>
 ---@param Index number
+---@param MinValue number
 ---@param Style table<any, any>
 ---@param Description string
 ---@param Actions fun(Index:number, onSelected:boolean, onListChange:boolean))
 ---@param Submenu any
-function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu)
+function Items:AddList(Label, Items, Index, MinValue, Description, Style, Actions, Submenu)
     local CurrentMenu = RageUI.CurrentMenu;
 
     local Option = RageUI.Options + 1
@@ -363,7 +364,7 @@ function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu
             if (not Style.IsDisabled) then
                 if (CurrentMenu.Controls.Left.Active) and not (CurrentMenu.Controls.Right.Active) then
                     Index = Index - 1
-                    if Index < 1 then
+                    if Index < MinValue then
                         Index = #Items
                     end
                     onListChange = true
@@ -371,7 +372,7 @@ function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu
                 elseif (CurrentMenu.Controls.Right.Active) and not (CurrentMenu.Controls.Left.Active) then
                     Index = Index + 1
                     if Index > #Items then
-                        Index = 1
+                        Index = MinValue
                     end
                     onListChange = true
                     Audio.PlaySound(RageUI.Settings.Audio.LeftRight.audioName, RageUI.Settings.Audio.LeftRight.audioRef)
