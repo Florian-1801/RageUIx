@@ -5,14 +5,19 @@
 ---
 
 local MainMenu = RageUI.CreateMenu("Title", "SUBTITLE", nil, nil, "rageui", "demo_banner" )
-MainMenu.EnableMouse = true
-
 local SubMenu = RageUI.CreateSubMenu(MainMenu, "Title", "SubTitle")
 
 local Checked = false
+local GridX, GridY = 0.5, 0.5
 local ListIndex = 1
 
-local GridX, GridY = 0.5, 0.5
+MainMenu.EnableMouse = true
+
+local ListTable = {
+	{name = "Object 1", label = "object_1", value = 1},
+	{name = "Object 2", label = "object_2", value = 1},
+	{name = "Object 3", label = "object_2", value = 1}
+}
 
 function RageUI.PoolMenus:Example()
     MainMenu:IsVisible(function(Items)
@@ -39,12 +44,21 @@ function RageUI.PoolMenus:Example()
             end
         end)
 
-        Items:AddList("List", { 1, 2, 3 }, ListIndex, nil, { IsDisabled = false }, function(Index, onSelected, onListChange)
+        Items:AddList("List", { 1, 2, 3 }, ListIndex, 1, nil, { IsDisabled = false }, function(Index, onSelected, onListChange)
             if (onListChange) then
                 ListIndex = Index
                 print(ListIndex)
             end
         end)
+
+        for _, v in pairs(ListTable)
+            Items:AddList(v.name, { 1, 2, 3, 4, 5 }, v.value, nil, { IsDisabled = false }, function(Index, onSelected, onListChange)
+                Items:AddInfo("Info for ListTable", {"Name :", "Label :", "Actual value (ListIndex) :"}, {v.name, v.label, v.value})
+                if (onListChange) then
+                    v.value = Index
+                end
+            end)
+        end
 
         Items:AddSeparator("Separator")
 
