@@ -52,7 +52,7 @@ function RageUI.PoolMenus:Example()
         end)
 
         for _, v in pairs(ListTable)
-            Items:AddList(v.name, { 1, 2, 3, 4, 5 }, v.value, nil, { IsDisabled = false }, function(Index, onSelected, onListChange)
+            Items:AddList(v.name, { 1, 2, 3, 4, 5 }, v.value, 1, nil, { IsDisabled = false }, function(Index, onSelected, onListChange)
                 Items:AddInfo("Info for ListTable", {"Name :", "Label :", "Actual value (ListIndex) :"}, {v.name, v.label, v.value})
                 if (onListChange) then
                     v.value = Index
