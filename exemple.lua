@@ -4,13 +4,13 @@
 --- DateTime: 22/04/2022 14:58
 ---
 
-local MainMenu = RageUI.CreateMenu("Title", "SUBTITLE", nil, nil, "rageui", "demo_banner" );
-MainMenu.EnableMouse = true;
+local MainMenu = RageUI.CreateMenu("Title", "SUBTITLE", nil, nil, "rageui", "demo_banner" )
+MainMenu.EnableMouse = true
 
 local SubMenu = RageUI.CreateSubMenu(MainMenu, "Title", "SubTitle")
 
-local Checked = false;
-local ListIndex = 1;
+local Checked = false
+local ListIndex = 1
 
 local GridX, GridY = 0.5, 0.5
 
@@ -41,7 +41,7 @@ function RageUI.PoolMenus:Example()
 
         Items:AddList("List", { 1, 2, 3 }, ListIndex, nil, { IsDisabled = false }, function(Index, onSelected, onListChange)
             if (onListChange) then
-                ListIndex = Index;
+                ListIndex = Index
                 print(ListIndex)
             end
         end)
@@ -89,11 +89,14 @@ function RageUI.PoolMenus:Example()
 
         end, submenu)
 
+        Items:AddButton("Show info", nil, { IsDisabled = false }, function(onSelected)
+            Items:AddInfo("Info title", {"Info left text 1", "Info left text 2"}, {"Info right text 1", "Info right text 2"})
+        end)
 
     end, function(Panels)
         Panels:Grid(GridX, GridY, "Top", "Bottom", "Left", "Right", function(X, Y, CharacterX, CharacterY)
-            GridX = X;
-            GridY = Y;
+            GridX = X
+            GridY = Y
             print(GridX, GridY)
         end, 12)
     end)
