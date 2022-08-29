@@ -14,5 +14,5 @@ client_scripts {
     'src/components/*.lua',
     'src/elements/*.lua',
     'src/items/*.lua',
-    "exemple.lua"
+    'exemple.lua'
 }
