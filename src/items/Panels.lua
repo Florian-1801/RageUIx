@@ -31,6 +31,29 @@ local Grid = {
     },
 }
 
+local Percentage = {
+    Background = { Dictionary = "commonmenu", Texture = "gradient_bgd", Y = 4, Width = 431, Height = 76 },
+    Bar = { X = 9, Y = 50, Width = 413, Height = 10 },
+    Text = {
+        Left = { X = 25, Y = 15, Scale = 0.35 },
+        Middle = { X = 215.5, Y = 15, Scale = 0.35 },
+        Right = { X = 398, Y = 15, Scale = 0.35 },
+    },
+}
+
+local Slider = {
+	Background = { Dictionary = "commonmenu", Texture = "gradient_bgd", Y = 4, Width = 431, Height = 76 },
+	Text = {
+		Left = { X = 18, Y = 8, Scale = 0.32 },
+		Right = { X = 380, Y = 8, Scale = 0.32 },
+		Upper = {X = 230, Y = 8, Scale = 0.32},
+	},
+	Bar = { X = 25, Y = 36, Width = 250, Height = 16 },
+	Slider = { X = 20, Y = 14.5, Width = 35, Height = 9 },
+	LeftArrow = { Dictionary = "commonmenu", Texture = "arrowleft", X = 12, Y = 32.5, Width = 25, Height = 25 },
+	RightArrow = { Dictionary = "commonmenu", Texture = "arrowright", X = 389, Y = 32.5, Width = 25, Height = 25 },
+}
+
 local function UIGridPanel(Type, StartedX, StartedY, TopText, BottomText, LeftText, RightText, Action, Index)
     local CurrentMenu = RageUI.CurrentMenu
     if (CurrentMenu.Index == Index) then
@@ -143,4 +166,148 @@ end
 ---@return void
 function Panels:GridVertical(StartedY, TopText, BottomText, Action, Index)
     UIGridPanel(GridType.Vertical, nil, StartedY, TopText, BottomText, nil, nil, Action, Index)
+end
+
+---Percentage
+---@param Percent number
+---@param HeaderText string
+---@param MinText string
+---@param MaxText string
+---@param Actions fun(Percent:number, onSelected:boolean, onProgressChange:boolean)
+---@param Index number
+---@return nil
+---@public
+function Panels:Percentage(Percent, HeaderText, MinText, MaxText, Actions, Index)
+    local CurrentMenu = RageUI.CurrentMenu
+
+    if (CurrentMenu ~= nil) then
+        if CurrentMenu() and (Index == nil or (CurrentMenu.Index == Index)) then
+
+            ---@type boolean
+            local Hovered = Graphics.IsMouseInBounds(CurrentMenu.X + Percentage.Bar.X + CurrentMenu.SafeZoneSize.X, CurrentMenu.Y + Percentage.Bar.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset - 4, Percentage.Bar.Width + CurrentMenu.WidthOffset, Percentage.Bar.Height + 8)
+
+            ---@type boolean
+            local Selected = false
+
+            ---@type number
+            local Progress = Percentage.Bar.Width
+
+            if (Percent < 0.0) then
+                Percent = 0.0
+            elseif (Percent > 1.0) then
+                Percent = 1.0
+            end
+
+            Progress = Progress * Percent
+
+            Graphics.Sprite(Percentage.Background.Dictionary, Percentage.Background.Texture, CurrentMenu.X, CurrentMenu.Y + Percentage.Background.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Percentage.Background.Width + CurrentMenu.WidthOffset, Percentage.Background.Height)
+            Graphics.Rectangle(CurrentMenu.X + Percentage.Bar.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Percentage.Bar.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Percentage.Bar.Width, Percentage.Bar.Height, 87, 87, 87, 255)
+            Graphics.Rectangle(CurrentMenu.X + Percentage.Bar.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Percentage.Bar.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Progress, Percentage.Bar.Height, 245, 245, 245, 255)
+
+            Graphics.Text(HeaderText or "Opacity", CurrentMenu.X + Percentage.Text.Middle.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Percentage.Text.Middle.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Percentage.Text.Middle.Scale, 245, 245, 245, 255, 1)
+            Graphics.Text(MinText or "0%", CurrentMenu.X + Percentage.Text.Left.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Percentage.Text.Left.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Percentage.Text.Left.Scale, 245, 245, 245, 255, 1)
+            Graphics.Text(MaxText or "100%", CurrentMenu.X + Percentage.Text.Right.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Percentage.Text.Right.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Percentage.Text.Right.Scale, 245, 245, 245, 255, 1)
+
+            if (Hovered) then
+                if IsDisabledControlPressed(0, 24) or IsControlPressed(0, 24) then
+                    Selected = true
+                    
+                    Progress = math.round((IsControlEnabled(2, 239) and GetControlNormal(2, 239) or GetDisabledControlNormal(2, 239)) * 1920 - CurrentMenu.SafeZoneSize.X - (CurrentMenu.X + Percentage.Bar.X + (CurrentMenu.WidthOffset / 2)))
+                    
+                    if Progress < 0 then
+                        Progress = 0
+                    elseif Progress > (Percentage.Bar.Width) then
+                        Progress = Percentage.Bar.Width
+                    end
+                    
+                    Percent = math.round(Progress / Percentage.Bar.Width, 2)
+                    onProgressChange = true
+                end
+                Actions(Percent, Selected, onProgressChange)
+                if (Selected) then
+                    Audio.PlaySound(RageUI.Settings.Audio.Slider.audioName, RageUI.Settings.Audio.Slider.audioRef, true)
+                end
+            end
+            
+            RageUI.ItemOffset = RageUI.ItemOffset + Percentage.Background.Height + Percentage.Background.Y
+        end
+    end
+end
+
+---SliderPanel
+---@param Value number
+---@param MinValue number
+---@param UpperText string
+---@param MaxValue number
+---@param Actions fun(Value:number, onSelected:boolean, onSliderChange:boolean)
+---@param Index number
+---@return nil
+---@public
+function Panels:SliderPanel(Value, MinValue, UpperText, MaxValue, Actions, Index)
+	local CurrentMenu = RageUI.CurrentMenu
+	if (CurrentMenu ~= nil) then
+		if CurrentMenu() and ((CurrentMenu.Index == Index)) then
+			Value = Value or 0
+			Slider.Bar.Width = Slider.RightArrow.X- Slider.LeftArrow.X - Slider.LeftArrow.Width - 5 + CurrentMenu.WidthOffset
+			Slider.Bar.X = Slider.LeftArrow.X + Slider.LeftArrow.Width
+			Slider.Text.Upper.X = (Slider.Bar.Width) / 2 + Slider.Bar.X
+			Slider.Text.Right.X = Slider.RightArrow.X + Slider.LeftArrow.Width
+			local Hovered = false
+			local LeftArrowHovered, RightArrowHovered = false, false
+			local SliderW = Slider.Bar.Width / (64 + 1)
+			local SliderX =  CurrentMenu.X + Slider.Bar.X + Value * Slider.Bar.Width / MaxValue
+
+			Hovered = Graphics.IsMouseInBounds(CurrentMenu.X + Slider.Bar.X + CurrentMenu.SafeZoneSize.X, CurrentMenu.Y + Slider.Bar.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset - 4, Slider.Bar.Width, Slider.Bar.Height + 8)
+
+			Graphics.Sprite("commonmenu", "gradient_bgd", CurrentMenu.X, CurrentMenu.Y + Slider.Background.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.Background.Width + CurrentMenu.WidthOffset, Slider.Background.Height, 0.0, 255, 255, 255, 255)
+			Graphics.Text(MinValue, CurrentMenu.X + Slider.Text.Left.X, CurrentMenu.Y + Slider.Text.Left.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Slider.Text.Left.Scale, 255, 255, 255, 255)
+			Graphics.Text(UpperText, CurrentMenu.X + Slider.Text.Upper.X, CurrentMenu.Y + Slider.Text.Upper.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Slider.Text.Upper.Scale, 255, 255, 255, 255, "Center")
+			Graphics.Text(MaxValue, CurrentMenu.X + Slider.Text.Right.X + CurrentMenu.WidthOffset, CurrentMenu.Y + Slider.Text.Right.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Slider.Text.Right.Scale, 255, 255, 255, 255, "Right")
+
+			Graphics.Sprite(Slider.LeftArrow.Dictionary, Slider.LeftArrow.Texture, CurrentMenu.X + Slider.LeftArrow.X, CurrentMenu.Y + Slider.LeftArrow.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.LeftArrow.Width, Slider.LeftArrow.Height, 0.0,  255, 255, 255, 255)
+			Graphics.Sprite(Slider.RightArrow.Dictionary, Slider.RightArrow.Texture, CurrentMenu.X + Slider.RightArrow.X + CurrentMenu.WidthOffset , CurrentMenu.Y + Slider.RightArrow.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.RightArrow.Width, Slider.RightArrow.Height, 0.0, 255, 255, 255, 255)
+			Graphics.Rectangle(CurrentMenu.X + Slider.Bar.X, CurrentMenu.Y + Slider.Bar.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.Bar.Width, Slider.Bar.Height, 87, 87, 87, 255)
+			Graphics.Rectangle(SliderX, CurrentMenu.Y + Slider.Bar.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, SliderW, Slider.Bar.Height, 245, 245, 245, 255)
+
+			LeftArrowHovered = Graphics.IsMouseInBounds(CurrentMenu.X + Slider.LeftArrow.X + CurrentMenu.SafeZoneSize.X, CurrentMenu.Y + Slider.LeftArrow.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.LeftArrow.Width, Slider.LeftArrow.Height)
+			RightArrowHovered = Graphics.IsMouseInBounds(CurrentMenu.X + Slider.RightArrow.X + CurrentMenu.SafeZoneSize.X + CurrentMenu.WidthOffset, CurrentMenu.Y + Slider.RightArrow.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.RightArrow.Width, Slider.RightArrow.Height)
+
+			if (Hovered) then
+				if IsDisabledControlPressed(0, 24) then
+					Selected = true
+					local GetControl_X = GetDisabledControlNormal
+					Value = (math.round(GetControl_X(2, 239) * 1920) - CurrentMenu.SafeZoneSize.X - Slider.Bar.X )/ Slider.Bar.Width * MaxValue
+					if Value < 0 then
+						Value = 0
+					elseif Value >= MaxValue then
+						Value = MaxValue
+					end
+					Value = math.round(Value, 0)
+					-- print(Value)
+
+					onSliderChange = true
+					Actions(Value, Selected, onSliderChange)
+					if (Selected) then
+						Audio.PlaySound(RageUI.Settings.Audio.Slider.audioName, RageUI.Settings.Audio.Slider.audioRef, true)
+					end
+				end
+			elseif (CurrentMenu.Controls.Click.Active and (LeftArrowHovered or RightArrowHovered)) then
+				Selected = true
+				-- local max = type(Items) == "table" and #Items or MaxValue
+				Value = Value + (LeftArrowHovered and -1 or RightArrowHovered and 1)
+				if Value < MinValue then
+					Value = MaxValue
+				elseif Value > MaxValue  then
+					Value = MinValue
+				end
+				-- print(Value)
+
+				onSliderChange = true
+				Actions(Value, Selected, onSliderChange)
+				if (Selected) then
+				    Audio.PlaySound(RageUI.Settings.Audio.LeftRight.audioName, RageUI.Settings.Audio.LeftRight.audioRef)
+				end
+			end
+		end
+	end
 end
