@@ -10,13 +10,21 @@ local SubMenu = RageUI.CreateSubMenu(MainMenu, "Title", "SubTitle")
 local Checked = false
 local GridX, GridY = 0.5, 0.5
 local ListIndex = 1
+local ItemPanels = {
+    percentage = 0.5,
+    slider = {	
+        ind = 5,
+        min = 0,
+        max = 50
+    }
+}
 
 MainMenu.EnableMouse = true
 
 local ListTable = {
-	{name = "Object 1", label = "object_1", value = 1},
-	{name = "Object 2", label = "object_2", value = 1},
-	{name = "Object 3", label = "object_2", value = 1}
+    {name = "Object 1", label = "object_1", value = 1},
+    {name = "Object 2", label = "object_2", value = 1},
+    {name = "Object 3", label = "object_2", value = 1}
 }
 
 function RageUI.PoolMenus:Example()
@@ -101,7 +109,7 @@ function RageUI.PoolMenus:Example()
 
         Items:AddButton("Submenu", nil, { IsDisabled = false }, function(onSelected)
 
-        end, submenu)
+        end, SubMenu)
 
         Items:AddButton("Show info", nil, { IsDisabled = false }, function(onSelected)
             Items:AddInfo("Info title", {"Info left text 1", "Info left text 2"}, {"Info right text 1", "Info right text 2"})
@@ -117,11 +125,21 @@ function RageUI.PoolMenus:Example()
 
     SubMenu:IsVisible(function(Items)
         -- Items
+        SubMenu.EnableMouse = true
         Items:AddButton("This is a submenu", "This is a submenu", { IsDisabled = false }, function(onSelected)
-
+            Items:AddInfo("Infos for SubMenu", {"Percentage", "SliderPanel"}, {ItemPanels.percentage * 100 .. " %", ItemPanels.slider.ind})
         end)
-    end, function()
-        -- Panels
+    end, function() -- Panels
+        Panels:Percentage(ItemPanels.percentage, "Percentage", "0 %", "100 %", function(Percentage, onSelected)
+            if (onSelected) then
+                ItemPanels.percentage = Percentage
+            end
+        end, 1)
+        Panels:SliderPanel(ItemPanels.slider.ind, ItemPanels.slider.min, "Slider Panel", ItemPanels.slider.max, function(Value, onSelected)
+            if (onSelected) then
+                ItemPanels.slider.ind = Value
+            end
+        end, 1)
     end)
 end
 
