@@ -143,6 +143,6 @@ function RageUI.PoolMenus:Example()
     end)
 end
 
-Keys.Register("Y", "Y", "Test", function()
+Keys.Register("E", "E", "Test", function()
     RageUI.Visible(MainMenu, not RageUI.Visible(MainMenu))
 end)
