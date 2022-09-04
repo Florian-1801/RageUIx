@@ -109,7 +109,7 @@ function RageUI.PoolMenus:Example()
 
         Items:AddButton("Submenu", nil, { IsDisabled = false }, function(onSelected)
 
-        end, submenu)
+        end, SubMenu)
 
         Items:AddButton("Show info", nil, { IsDisabled = false }, function(onSelected)
             Items:AddInfo("Info title", {"Info left text 1", "Info left text 2"}, {"Info right text 1", "Info right text 2"})
@@ -125,24 +125,24 @@ function RageUI.PoolMenus:Example()
 
     SubMenu:IsVisible(function(Items)
         -- Items
+        SubMenu.EnableMouse = true
         Items:AddButton("This is a submenu", "This is a submenu", { IsDisabled = false }, function(onSelected)
-
+            Items:AddInfo("Infos for SubMenu", {"Percentage", "SliderPanel"}, {ItemPanels.percentage * 100 .. " %", ItemPanels.slider.ind})
         end)
-    end, function()
-	Panels:Percentage(v.percentage, "Pourcentage", "0 %", "100 %", function(Percentage, onSelected)
-	    if (onSelected) then
-	        ItemPanels.percentage = Percentage
-	    end
-	end, 7)
-	Panels:SliderPanel(ItemPanels.slider.ind, ItemPanels.slider.min, "Slider Panel", ItemPanels.slider.max, function(Value, onSelected)
-	    if (onSelected) then
-	        ItemPanels.slider.ind = Value
-	    end
-	end, 8)
-        -- Panels
+    end, function() -- Panels
+        Panels:Percentage(ItemPanels.percentage, "Percentage", "0 %", "100 %", function(Percentage, onSelected)
+            if (onSelected) then
+                ItemPanels.percentage = Percentage
+            end
+        end, 1)
+        Panels:SliderPanel(ItemPanels.slider.ind, ItemPanels.slider.min, "Slider Panel", ItemPanels.slider.max, function(Value, onSelected)
+            if (onSelected) then
+                ItemPanels.slider.ind = Value
+            end
+        end, 1)
     end)
 end
 
-Keys.Register("Y", "Y", "Test", function()
+Keys.Register("E", "E", "Test", function()
     RageUI.Visible(MainMenu, not RageUI.Visible(MainMenu))
 end)
