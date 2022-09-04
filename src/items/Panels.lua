@@ -244,70 +244,70 @@ end
 ---@return nil
 ---@public
 function Panels:SliderPanel(Value, MinValue, UpperText, MaxValue, Actions, Index)
-	local CurrentMenu = RageUI.CurrentMenu
-	if (CurrentMenu ~= nil) then
-		if CurrentMenu() and ((CurrentMenu.Index == Index)) then
-			Value = Value or 0
-			Slider.Bar.Width = Slider.RightArrow.X- Slider.LeftArrow.X - Slider.LeftArrow.Width - 5 + CurrentMenu.WidthOffset
-			Slider.Bar.X = Slider.LeftArrow.X + Slider.LeftArrow.Width
-			Slider.Text.Upper.X = (Slider.Bar.Width) / 2 + Slider.Bar.X
-			Slider.Text.Right.X = Slider.RightArrow.X + Slider.LeftArrow.Width
-			local Hovered = false
-			local LeftArrowHovered, RightArrowHovered = false, false
-			local SliderW = Slider.Bar.Width / (64 + 1)
-			local SliderX =  CurrentMenu.X + Slider.Bar.X + Value * Slider.Bar.Width / MaxValue
+    local CurrentMenu = RageUI.CurrentMenu
+    if (CurrentMenu ~= nil) then
+        if CurrentMenu() and ((CurrentMenu.Index == Index)) then
+            Value = Value or 0
+            Slider.Bar.Width = Slider.RightArrow.X- Slider.LeftArrow.X - Slider.LeftArrow.Width - 5 + CurrentMenu.WidthOffset
+            Slider.Bar.X = Slider.LeftArrow.X + Slider.LeftArrow.Width
+            Slider.Text.Upper.X = (Slider.Bar.Width) / 2 + Slider.Bar.X
+            Slider.Text.Right.X = Slider.RightArrow.X + Slider.LeftArrow.Width
+            local Hovered = false
+            local LeftArrowHovered, RightArrowHovered = false, false
+            local SliderW = Slider.Bar.Width / (64 + 1)
+            local SliderX =  CurrentMenu.X + Slider.Bar.X + Value * Slider.Bar.Width / MaxValue
 
-			Hovered = Graphics.IsMouseInBounds(CurrentMenu.X + Slider.Bar.X + CurrentMenu.SafeZoneSize.X, CurrentMenu.Y + Slider.Bar.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset - 4, Slider.Bar.Width, Slider.Bar.Height + 8)
+            Hovered = Graphics.IsMouseInBounds(CurrentMenu.X + Slider.Bar.X + CurrentMenu.SafeZoneSize.X, CurrentMenu.Y + Slider.Bar.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset - 4, Slider.Bar.Width, Slider.Bar.Height + 8)
 
-			Graphics.Sprite("commonmenu", "gradient_bgd", CurrentMenu.X, CurrentMenu.Y + Slider.Background.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.Background.Width + CurrentMenu.WidthOffset, Slider.Background.Height, 0.0, 255, 255, 255, 255)
-			Graphics.Text(MinValue, CurrentMenu.X + Slider.Text.Left.X, CurrentMenu.Y + Slider.Text.Left.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Slider.Text.Left.Scale, 255, 255, 255, 255)
-			Graphics.Text(UpperText, CurrentMenu.X + Slider.Text.Upper.X, CurrentMenu.Y + Slider.Text.Upper.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Slider.Text.Upper.Scale, 255, 255, 255, 255, "Center")
-			Graphics.Text(MaxValue, CurrentMenu.X + Slider.Text.Right.X + CurrentMenu.WidthOffset, CurrentMenu.Y + Slider.Text.Right.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Slider.Text.Right.Scale, 255, 255, 255, 255, "Right")
+            Graphics.Sprite("commonmenu", "gradient_bgd", CurrentMenu.X, CurrentMenu.Y + Slider.Background.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.Background.Width + CurrentMenu.WidthOffset, Slider.Background.Height, 0.0, 255, 255, 255, 255)
+            Graphics.Text(MinValue, CurrentMenu.X + Slider.Text.Left.X, CurrentMenu.Y + Slider.Text.Left.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Slider.Text.Left.Scale, 255, 255, 255, 255)
+            Graphics.Text(UpperText, CurrentMenu.X + Slider.Text.Upper.X, CurrentMenu.Y + Slider.Text.Upper.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Slider.Text.Upper.Scale, 255, 255, 255, 255, "Center")
+            Graphics.Text(MaxValue, CurrentMenu.X + Slider.Text.Right.X + CurrentMenu.WidthOffset, CurrentMenu.Y + Slider.Text.Right.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Slider.Text.Right.Scale, 255, 255, 255, 255, "Right")
 
-			Graphics.Sprite(Slider.LeftArrow.Dictionary, Slider.LeftArrow.Texture, CurrentMenu.X + Slider.LeftArrow.X, CurrentMenu.Y + Slider.LeftArrow.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.LeftArrow.Width, Slider.LeftArrow.Height, 0.0,  255, 255, 255, 255)
-			Graphics.Sprite(Slider.RightArrow.Dictionary, Slider.RightArrow.Texture, CurrentMenu.X + Slider.RightArrow.X + CurrentMenu.WidthOffset , CurrentMenu.Y + Slider.RightArrow.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.RightArrow.Width, Slider.RightArrow.Height, 0.0, 255, 255, 255, 255)
-			Graphics.Rectangle(CurrentMenu.X + Slider.Bar.X, CurrentMenu.Y + Slider.Bar.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.Bar.Width, Slider.Bar.Height, 87, 87, 87, 255)
-			Graphics.Rectangle(SliderX, CurrentMenu.Y + Slider.Bar.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, SliderW, Slider.Bar.Height, 245, 245, 245, 255)
+            Graphics.Sprite(Slider.LeftArrow.Dictionary, Slider.LeftArrow.Texture, CurrentMenu.X + Slider.LeftArrow.X, CurrentMenu.Y + Slider.LeftArrow.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.LeftArrow.Width, Slider.LeftArrow.Height, 0.0,  255, 255, 255, 255)
+            Graphics.Sprite(Slider.RightArrow.Dictionary, Slider.RightArrow.Texture, CurrentMenu.X + Slider.RightArrow.X + CurrentMenu.WidthOffset , CurrentMenu.Y + Slider.RightArrow.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.RightArrow.Width, Slider.RightArrow.Height, 0.0, 255, 255, 255, 255)
+            Graphics.Rectangle(CurrentMenu.X + Slider.Bar.X, CurrentMenu.Y + Slider.Bar.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.Bar.Width, Slider.Bar.Height, 87, 87, 87, 255)
+            Graphics.Rectangle(SliderX, CurrentMenu.Y + Slider.Bar.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, SliderW, Slider.Bar.Height, 245, 245, 245, 255)
 
-			LeftArrowHovered = Graphics.IsMouseInBounds(CurrentMenu.X + Slider.LeftArrow.X + CurrentMenu.SafeZoneSize.X, CurrentMenu.Y + Slider.LeftArrow.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.LeftArrow.Width, Slider.LeftArrow.Height)
-			RightArrowHovered = Graphics.IsMouseInBounds(CurrentMenu.X + Slider.RightArrow.X + CurrentMenu.SafeZoneSize.X + CurrentMenu.WidthOffset, CurrentMenu.Y + Slider.RightArrow.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.RightArrow.Width, Slider.RightArrow.Height)
+            LeftArrowHovered = Graphics.IsMouseInBounds(CurrentMenu.X + Slider.LeftArrow.X + CurrentMenu.SafeZoneSize.X, CurrentMenu.Y + Slider.LeftArrow.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.LeftArrow.Width, Slider.LeftArrow.Height)
+            RightArrowHovered = Graphics.IsMouseInBounds(CurrentMenu.X + Slider.RightArrow.X + CurrentMenu.SafeZoneSize.X + CurrentMenu.WidthOffset, CurrentMenu.Y + Slider.RightArrow.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Slider.RightArrow.Width, Slider.RightArrow.Height)
 
-			if (Hovered) then
-				if IsDisabledControlPressed(0, 24) then
-					Selected = true
-					local GetControl_X = GetDisabledControlNormal
-					Value = (math.round(GetControl_X(2, 239) * 1920) - CurrentMenu.SafeZoneSize.X - Slider.Bar.X )/ Slider.Bar.Width * MaxValue
-					if Value < 0 then
-						Value = 0
-					elseif Value >= MaxValue then
-						Value = MaxValue
-					end
-					Value = math.round(Value, 0)
-					-- print(Value)
+            if (Hovered) then
+                if IsDisabledControlPressed(0, 24) then
+                    Selected = true
+                    local GetControl_X = GetDisabledControlNormal
+                    Value = (math.round(GetControl_X(2, 239) * 1920) - CurrentMenu.SafeZoneSize.X - Slider.Bar.X )/ Slider.Bar.Width * MaxValue
+                    if Value < 0 then
+                        Value = 0
+                    elseif Value >= MaxValue then
+                        Value = MaxValue
+                    end
+                    Value = math.round(Value, 0)
+                    -- print(Value)
 
-					onSliderChange = true
-					Actions(Value, Selected, onSliderChange)
-					if (Selected) then
-						Audio.PlaySound(RageUI.Settings.Audio.Slider.audioName, RageUI.Settings.Audio.Slider.audioRef, true)
-					end
-				end
-			elseif (CurrentMenu.Controls.Click.Active and (LeftArrowHovered or RightArrowHovered)) then
-				Selected = true
-				-- local max = type(Items) == "table" and #Items or MaxValue
-				Value = Value + (LeftArrowHovered and -1 or RightArrowHovered and 1)
-				if Value < MinValue then
-					Value = MaxValue
-				elseif Value > MaxValue  then
-					Value = MinValue
-				end
-				-- print(Value)
+                    onSliderChange = true
+                    Actions(Value, Selected, onSliderChange)
+                    if (Selected) then
+                        Audio.PlaySound(RageUI.Settings.Audio.Slider.audioName, RageUI.Settings.Audio.Slider.audioRef, true)
+                    end
+                end
+            elseif (CurrentMenu.Controls.Click.Active and (LeftArrowHovered or RightArrowHovered)) then
+                Selected = true
+                -- local max = type(Items) == "table" and #Items or MaxValue
+                Value = Value + (LeftArrowHovered and -1 or RightArrowHovered and 1)
+                if Value < MinValue then
+                    Value = MaxValue
+                elseif Value > MaxValue  then
+                    Value = MinValue
+                end
+                -- print(Value)
 
-				onSliderChange = true
-				Actions(Value, Selected, onSliderChange)
-				if (Selected) then
-				    Audio.PlaySound(RageUI.Settings.Audio.LeftRight.audioName, RageUI.Settings.Audio.LeftRight.audioRef)
-				end
-			end
-		end
-	end
+                onSliderChange = true
+                Actions(Value, Selected, onSliderChange)
+                if (Selected) then
+                    Audio.PlaySound(RageUI.Settings.Audio.LeftRight.audioName, RageUI.Settings.Audio.LeftRight.audioRef)
+                end
+            end
+        end
+    end
 end
