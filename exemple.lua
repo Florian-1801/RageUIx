@@ -10,6 +10,14 @@ local SubMenu = RageUI.CreateSubMenu(MainMenu, "Title", "SubTitle")
 local Checked = false
 local GridX, GridY = 0.5, 0.5
 local ListIndex = 1
+local ItemPanels = {
+	percentage = 0.5,
+	slider = {	
+		ind = 5,
+		min = 0,
+		max = 50
+	}
+}
 
 MainMenu.EnableMouse = true
 
@@ -121,10 +129,20 @@ function RageUI.PoolMenus:Example()
 
         end)
     end, function()
+	Panels:Percentage(v.percentage, "Pourcentage", "0 %", "100 %", function(Percentage, onSelected)
+	    if (onSelected) then
+	        ItemPanels.percentage = Percentage
+	    end
+	end, 7)
+	Panels:SliderPanel(ItemPanels.slider.ind, ItemPanels.slider.min, "Slider Panel", ItemPanels.slider.max, function(Value, onSelected)
+	    if (onSelected) then
+	        ItemPanels.slider.ind = Value
+	    end
+	end, 8)
         -- Panels
     end)
 end
 
-Keys.Register("E", "E", "Test", function()
+Keys.Register("Y", "Y", "Test", function()
     RageUI.Visible(MainMenu, not RageUI.Visible(MainMenu))
 end)
