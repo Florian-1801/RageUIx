@@ -11,20 +11,20 @@ local Checked = false
 local GridX, GridY = 0.5, 0.5
 local ListIndex = 1
 local ItemPanels = {
-	percentage = 0.5,
-	slider = {	
-		ind = 5,
-		min = 0,
-		max = 50
-	}
+    percentage = 0.5,
+    slider = {	
+        ind = 5,
+        min = 0,
+        max = 50
+    }
 }
 
 MainMenu.EnableMouse = true
 
 local ListTable = {
-	{name = "Object 1", label = "object_1", value = 1},
-	{name = "Object 2", label = "object_2", value = 1},
-	{name = "Object 3", label = "object_2", value = 1}
+    {name = "Object 1", label = "object_1", value = 1},
+    {name = "Object 2", label = "object_2", value = 1},
+    {name = "Object 3", label = "object_2", value = 1}
 }
 
 function RageUI.PoolMenus:Example()
@@ -143,6 +143,6 @@ function RageUI.PoolMenus:Example()
     end)
 end
 
-Keys.Register("E", "E", "Test", function()
+Keys.Register("Y", "Y", "Test", function()
     RageUI.Visible(MainMenu, not RageUI.Visible(MainMenu))
 end)
