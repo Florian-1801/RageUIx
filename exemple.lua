@@ -129,6 +129,10 @@ function RageUI.PoolMenus:Example()
         Items:AddButton("This is a submenu", "This is a submenu", { IsDisabled = false }, function(onSelected)
             Items:AddInfo("Infos for SubMenu", {"Percentage", "SliderPanel"}, {ItemPanels.percentage * 100 .. " %", ItemPanels.slider.ind})
         end)
+        Items:AddButton("Statistic Panel", false, { IsDisabled = false }, function(onSelected)
+            if (onSelected) then
+            end
+        end)
     end, function() -- Panels
         Panels:Percentage(ItemPanels.percentage, "Percentage", "0 %", "100 %", function(Percentage, onSelected)
             if (onSelected) then
@@ -140,6 +144,8 @@ function RageUI.PoolMenus:Example()
                 ItemPanels.slider.ind = Value
             end
         end, 1)
+        Panels:StatisticPanel(ItemPanels.percentage, "Percentage", 2)
+        Panels:StatisticPanelAdvanced("Percentage", ItemPanels.percentage, { 0, 255, 0, 255}, (1 - ItemPanels.percentage), { 255, 0, 0, 255 }, { 255, 255, 255, 255}, 2)
     end)
 end
 
