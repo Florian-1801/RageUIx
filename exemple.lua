@@ -144,7 +144,8 @@ function RageUI.PoolMenus:Example()
                 ItemPanels.slider.ind = Value
             end
         end, 1)
-        Panels:StatisticPanel(ItemPanels.slider.ind, "Slider", 2)
+        Panels:StatisticPanel(ItemPanels.percentage, "Percentage", 2)
+        Panels:StatisticPanelAdvanced("Percentage", ItemPanels.percentage, { 0, 255, 0, 255}, (1 - ItemPanels.percentage), { 255, 0, 0, 255 }, { 255, 255, 255, 255}, 2)
     end)
 end
 
