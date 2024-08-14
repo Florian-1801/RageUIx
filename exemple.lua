@@ -148,7 +148,3 @@ function RageUI.PoolMenus:Example()
         Panels:StatisticPanelAdvanced("Percentage", ItemPanels.percentage, { 0, 255, 0, 255}, (1 - ItemPanels.percentage), { 255, 0, 0, 255 }, { 255, 255, 255, 255}, 2)
     end)
 end
-
-Keys.Register("E", "E", "Test", function()
-    RageUI.Visible(MainMenu, not RageUI.Visible(MainMenu))
-end)

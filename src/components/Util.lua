@@ -1,9 +1,9 @@
 ---
 --- @author Dylan MALANDAIN, Kalyptus
+--- @editor Florian-1801
 --- @version 1.0.0
---- File created at [24/05/2021 09:57]
+--- created at [24/05/2021 10:02]
 ---
-
 function math.round(num, numDecimalPlaces)
     return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
 end

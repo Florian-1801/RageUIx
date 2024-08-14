@@ -1,5 +1,6 @@
 ---
 --- @author Dylan MALANDAIN, Kalyptus
+--- @editor Florian-1801
 --- @version 1.0.0
 --- created at [24/05/2021 10:02]
 ---
